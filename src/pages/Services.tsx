@@ -9,7 +9,9 @@ export default function ServicesPage() {
         {/* Hero Section */}
         <section className="relative">
           {/* Background Image */}
-          <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url('/public/heroimage1.png')` }}></div>
+          <div className="absolute inset-0 bg-cover bg-center z-0 ">
+            <img src="/public/heroimage.png" alt="Background" className="w-full h-full object-cover" />
+          </div>
 
           {/* Optional overlay for better text readability */}
           <div className="absolute inset-0 bg-black opacity-30 z-0"></div>
