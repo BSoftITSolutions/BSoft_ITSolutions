@@ -126,7 +126,7 @@ export default function ContactPage() {
                                 </div>
                                 <h3 className="font-bold text-lg mb-2">Call Us On</h3>
                                 <p className="text-muted-foreground">
-                                    +91 6281192909
+                                    +91 7989653304
                                 </p>
                             </CardContent>
                         </Card>
