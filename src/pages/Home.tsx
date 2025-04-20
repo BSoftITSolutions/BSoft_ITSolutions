@@ -13,8 +13,14 @@ export default function HomePage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative">
-          {/* Background Image */}
-          <div className="absolute inset-0 bg-cover bg-center z-0" style={{ backgroundImage: `url('/public/heroimage1.png')` }}></div>
+          <div className="absolute inset-0 bg-cover bg-center z-0 hero-background"></div>
+          <div className="absolute inset-0 z-0">
+            <img
+              src="/public/heroimage.png"
+              alt="Hero Background"
+              className="w-full h-full object-cover "
+            />
+          </div>
 
           {/* Optional overlay for better text readability */}
           <div className="absolute inset-0 bg-black opacity-30 z-0"></div>
