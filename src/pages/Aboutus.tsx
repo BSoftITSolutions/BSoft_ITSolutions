@@ -1,5 +1,4 @@
 import {  Linkedin, Twitter, Facebook, Instagram, Mail } from 'lucide-react';
-import heroImage from "../../public/heroimage.png"
 import {Link} from "react-router-dom"
 
 export default function CoWorkingWebsite() {
@@ -9,9 +8,9 @@ export default function CoWorkingWebsite() {
       <div className="relative">
         {/* Background Image */}
         <div
-          className="absolute inset-0 bg-cover bg-center z-0"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        ></div>
+          className="absolute inset-0 bg-cover bg-center z-0">
+          <img src="../../public/abouthero.png" alt="Background" className="w-full h-full object-cover" />
+        </div>
 
         {/* Optional overlay for better text readability */}
         <div className="absolute inset-0 bg-black opacity-30 z-0"></div>
@@ -212,10 +211,11 @@ export default function CoWorkingWebsite() {
                 Connect with our team, share your ideas and success stories, make great impact and build amazing connections!
               </p>
               <div className="flex space-x-3">
-                <div className='rounded-full bg-green-2'><a href="#" className="hover:text-gray-300"><Facebook size={20} /></a></div>
-                <a href="#" className="hover:text-gray-300"><Twitter size={20} /></a>
-                <a href="#" className="hover:text-gray-300"><Instagram size={20} /></a>
-                <a href="#" className="hover:text-gray-300"><Linkedin size={20} /></a>
+                <div className='rounded-full bg-green-2'>
+                <a href="#" className="hover:text-gray-300" title="Follow us on Facebook"><Facebook size={20} /></a></div>
+                <a href="#" className="hover:text-gray-300" title="Follow us on Twitter"><Twitter size={20} /></a>
+                <a href="#" className="hover:text-gray-300" title="Follow us on Instagram"><Instagram size={20} /></a>
+                <a href="#" className="hover:text-gray-300" title="Follow us on LinkedIn"><Linkedin size={20} /></a>
               </div>
             </div>
           </div>
