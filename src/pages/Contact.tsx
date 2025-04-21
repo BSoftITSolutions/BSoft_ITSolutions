@@ -58,7 +58,7 @@ export default function ContactPage() {
         e.preventDefault();
 
         emailjs
-            .sendForm('service_iw0se5c', 'template_kxbq5qo', form.current!, {
+            .sendForm('service_iw0se5c', 'template_kxbq5qo', form.current as HTMLFormElement, {
                 publicKey: '1wJ4HsLzA21F2fTbz',
             })
             .then(
