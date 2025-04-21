@@ -7,21 +7,17 @@ import emailjs from "@emailjs/browser";
 export default function ContactPage() {
     const form = useRef<HTMLFormElement>(null);
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        message: "",
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [formStatus, setFormStatus] = useState({ success: false, message: "" });
+    
+    const [isSubmitting ] = useState(false);
+    const [formStatus] = useState({ success: false, message: "" });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+    // const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    //     const { name, value } = e.target;
+    //     setFormData(prevState => ({
+    //         ...prevState,
+    //         [name]: value
+    //     }));
+    // };
 
     // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     //     e.preventDefault();
@@ -58,11 +54,11 @@ export default function ContactPage() {
     //     }
     // };
 
-    const sendEmail = (e) => {
+    const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         emailjs
-            .sendForm('service_iw0se5c', 'template_kxbq5qo', form.current, {
+            .sendForm('service_iw0se5c', 'template_kxbq5qo', form.current!, {
                 publicKey: '1wJ4HsLzA21F2fTbz',
             })
             .then(
