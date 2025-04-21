@@ -1,12 +1,82 @@
-import { Link } from "react-router-dom"
-import { Card, CardContent } from "@/components/ui/card"
-
+import { Link } from "react-router-dom";
+import { Card, CardContent } from "@/components/ui/card";
+import { useState } from "react";
+import React, { useRef } from 'react';
+import emailjs from "@emailjs/browser";
 
 export default function ContactPage() {
+    const form = useRef<HTMLFormElement>(null);
+
+    const [formData, setFormData] = useState({
+        name: "",
+        email: "",
+        message: "",
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [formStatus, setFormStatus] = useState({ success: false, message: "" });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     setIsSubmitting(true);
+
+    //     try {
+    //         // Using EmailJS to send emails without a backend
+    //         // You'll need to sign up at emailjs.com and get your service ID, template ID, and user ID
+    //         await emailjs.send(
+    //             "service_hrdzv0l", // Replace with your EmailJS service ID
+    //             "template_7gqk7g5", // Replace with your EmailJS template ID
+    //             {
+    //                 to_email: "bsoftitsolutions@gmail.com",
+    //                 from_name: formData.name,
+    //                 reply_to: formData.email,
+    //                 message: formData.message,
+    //             },
+    //             "ET1hypSWz4REXXypS" // Replace with your EmailJS public key
+    //         );
+
+    //         setFormStatus({
+    //             success: true,
+    //             message: "Thank you for your message! We'll get back to you soon."
+    //         });
+    //         setFormData({ name: "", email: "", message: "" });
+    //     } catch (error) {
+    //         console.error("Failed to send email:", error);
+    //         setFormStatus({
+    //             success: false,
+    //             message: "Something went wrong. Please try again later."
+    //         });
+    //     } finally {
+    //         setIsSubmitting(false);
+    //     }
+    // };
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs
+            .sendForm('service_iw0se5c', 'template_kxbq5qo', form.current, {
+                publicKey: '1wJ4HsLzA21F2fTbz',
+            })
+            .then(
+                () => {
+                    console.log('SUCCESS!');
+                },
+                (error) => {
+                    console.log('FAILED...', error.text);
+                },
+            );
+    };
+
     return (
         <div className="flex min-h-screen flex-col">
-
-
             <main className="flex-1">
                 {/* Hero Section */}
                 <section className="relative">
@@ -15,7 +85,7 @@ export default function ContactPage() {
                         <img
                             src="/public/heroimage1.png"
                             alt="Contact Us"
-                            className="w-full h-full object-cover brightness-[0.7]"
+                            className="w-full h-full object-cover brightness-75"
                         />
                     </div>
 
@@ -27,7 +97,7 @@ export default function ContactPage() {
                         <div className="max-w-2xl space-y-4 text-white">
                             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Contact Us</h1>
                             <p className="text-lg text-white/90">
-                                At BSoft IT Solutions, we’re here to assist you with all your academic, research, and technical needs. Whether you have a project inquiry, need expert guidance, or require technical support, our team is ready to help.
+                                At BSoft IT Solutions, we're here to assist you with all your academic, research, and technical needs. Whether you have a project inquiry, need expert guidance, or require technical support, our team is ready to help.
                             </p>
                         </div>
                     </div>
@@ -40,13 +110,12 @@ export default function ContactPage() {
                     </div>
                 </section>
 
-
                 {/* Get In Touch */}
                 <section className="container py-16">
                     <div className="text-center space-y-4 mb-12">
                         <h2 className="text-3xl font-bold">Get In Touch</h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto">
-                            At BSoft IT Solutions, we’re here to assist you with all your academic, research, and technical needs. Whether you have a project inquiry, need expert guidance, or require technical support, our team is ready to help.
+                            At BSoft IT Solutions, we're here to assist you with all your academic, research, and technical needs. Whether you have a project inquiry, need expert guidance, or require technical support, our team is ready to help.
                         </p>
                         <div className="flex justify-center gap-4 mt-4">
                             <Link
@@ -84,8 +153,8 @@ export default function ContactPage() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-                        {/* <Card className="border shadow-sm">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <Card className="border shadow-sm">
                             <CardContent className="p-6 flex flex-col items-center text-center">
                                 <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
                                     <svg className="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -105,12 +174,12 @@ export default function ContactPage() {
                                 </div>
                                 <h3 className="font-bold text-lg mb-2">Our Location</h3>
                                 <p className="text-muted-foreground">
-                                    68 East 12th Street, 1st Floor
+                                    Hyderabad, Telangana
                                     <br />
-                                    New York, NY, 10022
+                                    India
                                 </p>
                             </CardContent>
-                        </Card> */}
+                        </Card>
 
                         <Card className="border shadow-sm">
                             <CardContent className="p-6 flex flex-col items-center text-center">
@@ -152,13 +221,101 @@ export default function ContactPage() {
                     </div>
                 </section>
 
-                {/* Map Section */}
-                {/* <section className="w-full h-96 relative">
-                    <img src="/placeholder.svg?height=600&width=1200&text=Google Map" alt="Map" className="object-cover" />
-                </section> */}
+                {/* Contact Form Section */}
+                <section className="py-16 bg-gray-50">
+                    <div className="container">
+                        <div className="max-w-3xl mx-auto">
+                            <Card className="border-0 shadow-lg">
+                                <CardContent className="p-8">
+                                    <h2 className="text-3xl font-bold text-center mb-6">Send a Message</h2>
 
-                {/* Contact Form */}
-                
+                                    {formStatus.message && (
+                                        <div className={`mb-6 p-4 rounded-md ${formStatus.success ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                                            {formStatus.message}
+                                        </div>
+                                    )}
+
+                                    <form ref={form} onSubmit={sendEmail}>
+                                        <input type="text" name="from_name"
+                                            placeholder="Name"
+                                            className="w-full p-4 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                                            required
+                                        />
+                                        <input type="email" name="from_email"
+                                            placeholder="E-mail address"
+                                            className="w-full p-4 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                                            required
+                                        />
+                                        <textarea name="message"
+                                            placeholder="Message"
+                                            className="w-full p-4 mb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                                            required
+                                        />
+                                        {/* <input type="submit" value="Send" /> */}
+                                        <div className="flex justify-center">
+                                            <button 
+                                                type="submit" 
+                                                className="px-8 py-4 bg-green-500 text-white font-medium rounded-full hover:bg-green-600 transition-colors w-full md:w-auto disabled:opacity-70 disabled:cursor-not-allowed"
+                                                disabled={isSubmitting}
+                                            >
+                                                {isSubmitting ? "Sending..." : "Submit"}
+                                            </button>
+                                        </div> 
+
+                                        {/* <div>
+                                            <input 
+                                                type="text" 
+                                                name="from_name" 
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                                placeholder="Name" 
+                                                className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                                                required
+                                            />
+                                        </div>
+                                        
+                                        <div>
+                                            <input 
+                                                type="email" 
+                                                name="email" 
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                placeholder="E-mail address" 
+                                                className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                                                required
+                                            />
+                                        </div>
+                                        
+                                        <div>
+                                            <textarea 
+                                                name="message" 
+                                                value={formData.message}
+                                                onChange={handleChange}
+                                                placeholder="Message" 
+                                                className="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+                                                required
+                                            ></textarea>
+                                        </div>
+                                        
+                                        <div className="text-sm text-gray-500">
+                                            By submitting, you agree to the processing of your personal data by us as described in the Privacy Statement.
+                                        </div>
+                                        
+                                        <div className="flex justify-center">
+                                            <button 
+                                                type="submit" 
+                                                className="px-8 py-4 bg-green-500 text-white font-medium rounded-full hover:bg-green-600 transition-colors w-full md:w-auto disabled:opacity-70 disabled:cursor-not-allowed"
+                                                disabled={isSubmitting}
+                                            >
+                                                {isSubmitting ? "Sending..." : "Submit"}
+                                            </button>
+                                        </div> */}
+                                    </form>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </div>
+                </section>
             </main>
 
             {/* Footer */}
@@ -189,7 +346,6 @@ export default function ContactPage() {
                                         Services
                                     </Link>
                                 </li>
-
                                 <li>
                                     <Link to="/contact" className="text-white/80 hover:text-white">
                                         Contact
@@ -197,31 +353,6 @@ export default function ContactPage() {
                                 </li>
                             </ul>
                         </div>
-                        {/* <div>
-                            <h4 className="font-medium mb-4">Important Links</h4>
-                            <ul className="space-y-2">
-                                <li>
-                                    <Link to="/terms" className="text-white/80 hover:text-white">
-                                        Terms and Conditions
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/legal" className="text-white/80 hover:text-white">
-                                        Legal
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/business" className="text-white/80 hover:text-white">
-                                        Business
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/partners" className="text-white/80 hover:text-white">
-                                        Partners
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div> */}
                         <div>
                             <h4 className="font-medium mb-4">Let's Connect!</h4>
                             <p className="text-white/80 mb-4">Connect with our team, share your ideas and success stories, make great impact and build amazing connections!</p>
@@ -268,6 +399,5 @@ export default function ContactPage() {
                 </div>
             </footer>
         </div>
-    )
+    );
 }
-
